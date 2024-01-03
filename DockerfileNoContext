@@ -1,0 +1,30 @@
+FROM node:16.13.2
+
+ARG DEFAULT_PORT=3019
+
+ENV PORT=${DEFAULT_PORT}
+
+# set working directory
+WORKDIR /app
+
+# add `/app/node_modules/.bin` to $PATH
+ENV PATH /app/node_modules/.bin:$PATH
+
+# install app dependencies
+COPY package.json ./
+
+COPY yarn.lock ./
+
+RUN yarn
+
+# add app
+COPY . ./
+
+RUN useradd -s /bin/sh -G root --uid 1001 lazsa
+RUN usermod -aG sudo lazsa
+RUN echo "lazsa ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers && chown -R lazsa:root /app
+
+USER lazsa
+
+# start app
+CMD PORT=${PORT} yarn start

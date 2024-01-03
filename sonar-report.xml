@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testExecutions version="1">
+    <file path="https://techstack-templates.tooling.ibdp.calibo.com/dev/react17.0.2-template-without-typescript-yarn/-/blob/master/src/test/home.test.js">
+        <testCase name="&lt;Home /&gt; renders &lt;Home /&gt; component in root" duration="88"/>
+    </file>
+</testExecutions>
