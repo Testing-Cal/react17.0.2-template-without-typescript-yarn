@@ -21,7 +21,7 @@ updateStrategy:
 
 ingress:
   enabled: false
-  className: nginx
+  ingressClass: nginx
   annotations:
     nginx.ingress.kubernetes.io/use-regex: "true"
   paths:
