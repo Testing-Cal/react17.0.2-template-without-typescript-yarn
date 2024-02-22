@@ -2,50 +2,35 @@
 FROM node:16.13.2 as builder
 
 # copy the package.json to install dependencies
-COPY package.json yarn.lock ./
+COPY package.json package-lock.json ./
 
 # Install the dependencies and make the folder
-RUN yarn && mkdir /react-ui && mv ./node_modules ./react-ui
-
+RUN npm install && mkdir /react-ui && mv ./node_modules ./react-ui
 
 WORKDIR /react-ui
 
 COPY . .
+COPY .env .
+ARG CONTEXT='/'
+RUN sed -i "s|"/\basepath"|"${CONTEXT}"|g" .env
 
 # Build the project and copy the files
-RUN yarn run build
+RUN npm run build
 
 
 
-FROM nginx:alpine
+FROM node:16.13.2
+ARG CONTEXT='/'
 
-ENV context ""
-ARG DEFAULT_PORT 3019
-
-ENV PORT ${DEFAULT_PORT}
 #!/bin/sh
-RUN apk add sudo && addgroup -S lazsa && adduser -S -G root --uid 1001 lazsa
-RUN echo "lazsa ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/lazsa
-RUN chown -R lazsa:root /etc/nginx/ \
-    && chmod -R 775 /etc/nginx \
-    && chown -R lazsa:root /run && chmod -R 775 /run \
-    && chown -R lazsa:root /var/cache/nginx/ \
-    && chmod -R 755 /var/cache/nginx/
-
-## Remove default nginx index page
-RUN rm -rf /usr/share/nginx/html/*
-
-COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
-
+#RUN apk add sudo && addgroup -S lazsa && adduser -S -G root --uid 1001  lazsa
+#RUN echo "lazsa ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/lazsa
 
 # Copy from the stahg 1
-COPY --from=builder /react-ui/build /usr/share/nginx/html
-COPY script.sh /
-RUN chmod 777 ./script.sh
+COPY --from=builder /react-ui/build /react-ui/build
+COPY ./server.js /react-ui
+WORKDIR /react-ui
 
-WORKDIR /
-USER lazsa
-CMD ["./script.sh"]
-
-EXPOSE $PORT
-
+# USER lazsa
+RUN npm install express
+CMD REACT_APP_CONTEXT=${CONTEXT} node server.js
