@@ -90,6 +90,9 @@ function Home() {
     title: {
       text: 'Business outcome vs cultural index'
     },
+    credits:{
+      enabled:false
+    },
     plotOptions: {
         series: {
             marker: {
@@ -98,9 +101,7 @@ function Home() {
             }
         }
     },
-    credits:{
-      enabled:false
-    },
+
     series: data
     }} />
         </div>
@@ -110,7 +111,7 @@ function Home() {
             <table className="table table-striped table-bordered table-dark p-5">
               <tbody>
               {
-                  data.map(x=><tr>
+                  data.map((x,index)=><tr key={index}>
                       <td><b>{x.name}</b></td>
                       {
                         x.data.map(y=><td>{y}</td>)
