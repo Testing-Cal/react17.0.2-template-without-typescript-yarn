@@ -114,7 +114,7 @@ function Home() {
                   data.map((x,index)=><tr key={index}>
                       <td><b>{x.name}</b></td>
                       {
-                        x.data.map(y=><td>{y}</td>)
+                        x.data.map(y=><td key={y}>{y}</td>)
                       }
                     </tr>)
                 }
