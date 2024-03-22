@@ -3,7 +3,7 @@ import Enzyme from "enzyme";
 import { shallow } from "enzyme";
 import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
 import "jest-enzyme";
-import Dashboard from "../dashboard-page";
+import Dashboard from "../dashboard";
 
 jest.mock("highcharts/highcharts-3d");
 

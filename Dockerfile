@@ -13,7 +13,7 @@ COPY . .
 COPY .env .
 ARG CONTEXT='/'
 RUN sed -i "s|"/\basepath"|"${CONTEXT}"|g" .env
-
+RUN export VCONTEXT=$(echo ${CONTEXT} | sed "s|/||g") && sed -i "s|"CONTEXT"|"${VCONTEXT}"|g" package.json
 # Build the project and copy the files
 RUN npm run build
 
