@@ -458,3 +458,4 @@ gradle-app.setting
 
 # Cython debug symbols
 
+sonar-report.xml
