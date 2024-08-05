@@ -28,7 +28,7 @@ ARG CONTEXT='/'
 
 # Copy from the stahg 1
 COPY --from=builder /react-ui/build /react-ui/build
-COPY ./server.js /react-ui
+COPY ./server.js yarn.lock /react-ui
 WORKDIR /react-ui
 
 # USER lazsa
