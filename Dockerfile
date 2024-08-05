@@ -2,10 +2,10 @@
 FROM node:20.11.1 as builder
 
 # copy the package.json to install dependencies
-COPY package.json ./
+COPY package.json yarn.lock ./
 
 # Install the dependencies and make the folder
-RUN npm install && mkdir /react-ui && mv ./node_modules ./react-ui
+RUN yarn config set "strict-ssl" false -g && yarn install && mkdir /react-ui && mv ./node_modules ./react-ui
 
 WORKDIR /react-ui
 
@@ -15,7 +15,7 @@ ARG CONTEXT='/'
 RUN sed -i "s|"/\basepath"|"${CONTEXT}"|g" .env
 RUN export VCONTEXT=$(echo ${CONTEXT} | sed "s|/||g") && sed -i "s|"CONTEXT"|"${VCONTEXT}"|g" package.json
 # Build the project and copy the files
-RUN npm run build
+RUN yarn build
 
 
 
@@ -32,5 +32,5 @@ COPY ./server.js /react-ui
 WORKDIR /react-ui
 
 # USER lazsa
-RUN npm install express
+RUN yarn config set "strict-ssl" false -g && yarn add express
 CMD REACT_APP_CONTEXT=${CONTEXT} node server.js
