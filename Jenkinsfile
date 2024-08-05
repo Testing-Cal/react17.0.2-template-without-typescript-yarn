@@ -345,7 +345,7 @@ pipeline {
                if ("${list[i]}" == "'UnitTests'" && env.ACTION == 'DEPLOY') {
                  stage('Unit Tests') {
                     sh """
-                    docker run --rm --user root -v "$WORKSPACE":/opt/repo -w /opt/repo $NODE_IMAGE /bin/bash -c "cd /opt/repo && yarn && yarn test -- --coverage --watchAll=false && yarn run test:coverage"
+                    docker run --rm --user root -v "$WORKSPACE":/opt/repo -w /opt/repo $NODE_IMAGE /bin/bash -c "cd /opt/repo && yarn test -- --coverage --watchAll=false && yarn run test:coverage"
                     sudo chown -R `id -u`:`id -g` "$WORKSPACE"
                     """
                  }
