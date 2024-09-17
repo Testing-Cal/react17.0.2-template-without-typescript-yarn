@@ -3,6 +3,7 @@
  "transform": {
     "^.+\\.(js|jsx)$": "babel-jest"
  },
+ "testEnvironment": "jsdom",
  "testRegex": "/*.test.js$",
  "collectCoverage": true,
  "coverageReporters": ["lcov"],
