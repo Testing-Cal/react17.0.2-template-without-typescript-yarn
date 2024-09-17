@@ -1,13 +1,10 @@
-import React from 'react';
-import Enzyme from 'enzyme';
-import { shallow } from 'enzyme';
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
-import 'jest-enzyme';
+import React from "react";
+import { render } from "@testing-library/react";
+import "@testing-library/jest-dom";
 import Home from '../home';
 
-Enzyme.configure({ adapter: new Adapter() });
 describe('<Home />', () => {
     it('renders <Home /> component in root', () => {
-      shallow(<Home />);
+      render(<Home />);
     });
 });
