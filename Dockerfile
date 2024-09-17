@@ -1,5 +1,5 @@
 # stage1 as builder
-FROM node:20.11.1 as builder
+FROM node:20.11.1-slim as builder
 
 # copy the package.json to install dependencies
 COPY package.json ./
@@ -19,7 +19,7 @@ RUN yarn build
 
 
 
-FROM node:20.11.1
+FROM node:20.11.1-slim
 ARG CONTEXT='/'
 
 #!/bin/sh
