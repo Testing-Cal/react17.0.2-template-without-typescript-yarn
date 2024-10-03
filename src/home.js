@@ -1,11 +1,6 @@
 import React, { useState } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import highcharts3d from "highcharts/highcharts-3d";
-
-if (typeof Highcharts === "object") {
-  highcharts3d(Highcharts); // Execute the bell curve module
-}
 
 const data = [
   {
