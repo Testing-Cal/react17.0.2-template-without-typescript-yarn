@@ -5,7 +5,7 @@ FROM node:20.11.1-slim as builder
 COPY package.json ./
 
 # Install the dependencies and make the folder
-RUN yarn config set "strict-ssl" false -g && yarn install && mkdir /react-ui && mv ./node_modules ./react-ui
+RUN yarn config set "strict-ssl" true -g && yarn install && mkdir /react-ui && mv ./node_modules ./react-ui
 
 WORKDIR /react-ui
 
@@ -32,5 +32,5 @@ COPY ./server.js  /react-ui
 WORKDIR /react-ui
 
 # USER lazsa
-RUN yarn config set "strict-ssl" false -g && yarn add express
+RUN yarn config set "strict-ssl" true -g && yarn add express
 CMD REACT_APP_CONTEXT=${CONTEXT} node server.js
